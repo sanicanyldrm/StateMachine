@@ -1,5 +1,5 @@
 #include "Move.h"
-
+#include "Hal.h"
 
 
 
@@ -14,7 +14,7 @@
 */
 void Move_Init(void)
 {
-    Move_Status.isMoving = ACT_STOPPED;
+    
 }
 
 
@@ -24,7 +24,7 @@ void Move_Init(void)
 */
 void Move_Start(void)
 {
-    Move_Status.isMoving = ACT_MOVING;
+    HAL_Motor_Run();
 }
 
 /*
@@ -33,51 +33,57 @@ void Move_Start(void)
 */
 void Move_Stop(void)
 {
-    Move_Status.isMoving = ACT_STOPPED;
+    
 }
 
-/*
-* @brief: This function is used to update the movement status
-* @param: None
-*/
-void Move_Update(void)
-{
-    bool isObjectOnGripper = HAL_Supply_Object_Status();
 
-    if(isObjectOnGripper)
-    {
-        Move_Stop(); // Stop the movement
-    }
-    else
-    {
-        Move_Start(); // Start the movement
-    }
-}
 
 
 /*
 * @brief: This function is used to check the movement request
 * @param: None
 */
-void Check_Move_Request(void)
+uint8_t Check_Movement_Request(void)
 {
+    uint8_t ret_val;
     uint8_t isMoveRequested = HAL_Supply_Move_Request();
 
     if(isMoveRequested)
     {
-        Move_Start(); // Start the movement
+        ret_val = 1;
     }
     else
     {
-        Move_Stop(); // Stop the movement
+        ret_val = 0;
+    }
+
+    return ret_val;
+}
+
+void Open_Grip (void)
+{
+    uint8_t isGripOpen = HAL_Supply_Grip_Status();
+    if(!isGripOpen)
+    {
+        HAL_Open_Grip();
+    }
+    else
+    {
+        //do nothing
     }
 }
 
-
-/*
-* @brief This function is used to check the object while moving
-*/
-void Check_Object_While_Moving()
+uint8_t Close_Grip(void)
 {
-    Move_Update();
+    uint8_t ret_val;
+    uint8_t isObjectGripped = HAL_Supply_Object_Status();
+    if(isObjectGripped)
+    {
+        ret_val = 1;
+    }
+    else
+    {
+        ret_val = 0;
+    }
+    return ret_val;
 }

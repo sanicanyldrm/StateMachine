@@ -1,28 +1,39 @@
+#ifndef MOVE_H
+#define MOVE_H
+
+
 #include "stdint.h"
 #include "stdbool.h"
+
 
 
 #define ACT_MOVING                  1
 #define ACT_STOPPED                 0
 
 
-/*
-* @brief: This structure is used to store the status of the movement
-* @param: isMoving: This variable is used to store the status of the movement
-*/
 typedef struct 
 {
+    /* data */
     bool isMoving;
 }Move_Status_t;
 
+typedef struct 
+{
+    bool is_Move_Requested;
+}Move_Request_t;
 
-Move_Status_t Move_Status;
+
+
 
 
 
 void Move_Init(void);
 void Move_Start(void);
 void Move_Stop(void);
-void Move_Update(void);
-void Check_Movement_Request(void);
 
+uint8_t Check_Movement_Request(void);
+void Open_Grip(void);
+uint8_t Close_Grip(void);
+
+
+#endif

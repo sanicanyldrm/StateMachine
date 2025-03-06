@@ -1,6 +1,11 @@
+#ifndef APPLICATION_STATE_MACHINE_H
+#define APPLICATION_STATE_MACHINE_H
 #include "stdint.h"
-#include "stdbool.h"
-#include "Move.h"
+#include "stdio.h"
+
+
+
+
 
 
 #define APP_STATE_NUMBER            6  
@@ -17,7 +22,7 @@ typedef enum
     APP_GRIP_RELEASE_STATE
 }App_State_e;
 
-App_State_e App_State;
+extern App_State_e App_State;
 
 
 
@@ -27,4 +32,6 @@ void App_Grip_Open_State(void);
 void App_Grip_Close_State(void);
 void App_Grip_Move_State(void);
 void App_Grip_Release_State(void);
+void App_State_Machine(void);
 
+#endif

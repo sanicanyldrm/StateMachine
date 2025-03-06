@@ -1,32 +1,22 @@
+#ifndef HAL_H
+#define HAL_H
+
+
+#include "stdbool.h"
 #include "stdint.h"
 
 
-
-
-
-
-/*
-* @brief: This structure is used to store the movement request
-* @param: isMoveRequested: This variable is used to store the movement request
-*/
-typedef struct 
-{
-    bool isMoveRequested;
-}Move_Request_t;
-
-
-typedef struct
-{
-    bool isObjectOnGripper;
-}Object_Status_t;
-
-
-
-Object_Status_t Object_Status;
-Move_Request_t Move_Request;
+extern uint8_t HAL_Move_Request;
+extern uint8_t HAL_Object_Status;
 
 uint8_t HAL_Supply_Object_Status(void);
 uint8_t HAL_Supply_Move_Request(void);
 
 
+uint8_t HAL_Supply_Grip_Status(void);
+void HAL_Open_Grip(void);
+void HAL_Close_Grip(void);
+void HAL_Motor_Run(void);
 
+
+#endif
